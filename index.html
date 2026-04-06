@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gavin Dias — AI Engineer Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root,[data-theme="light"]{
+  --bg:#f5f4f0;
+  --surface:#ffffff;
+  --surface-2:#f9f8f5;
+  --surface-offset:#eeece7;
+  --border:rgba(30,25,15,0.10);
+  --divider:rgba(30,25,15,0.07);
+  --text:#1a1714;
+  --text-muted:#6b6760;
+  --text-faint:#b0aea8;
+  --accent:#01696f;
+  --accent-hover:#0c4e54;
+  --accent-light:#d4e8e7;
+  --accent-chip-bg:#e5f0ef;
+  --accent-chip-text:#01696f;
+  --tag-bg:#edecea;
+  --tag-text:#4a4844;
+  --shadow-sm:0 1px 3px rgba(20,15,5,0.07),0 1px 2px rgba(20,15,5,0.04);
+  --shadow-md:0 4px 16px rgba(20,15,5,0.08),0 2px 6px rgba(20,15,5,0.04);
+  --r-sm:5px;--r-md:8px;--r-lg:12px;--r-full:9999px;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:'DM Mono',monospace;
+}
+[data-theme="dark"]{
+  --bg:#141311;
+  --surface:#1c1b18;
+  --surface-2:#222119;
+  --surface-offset:#1a1916;
+  --border:rgba(255,255,255,0.08);
+  --divider:rgba(255,255,255,0.05);
+  --text:#e8e5df;
+  --text-muted:#7a7872;
+  --text-faint:#4a4844;
+  --accent:#4f9fa6;
+  --accent-hover:#2d8690;
+  --accent-light:#1e3535;
+  --accent-chip-bg:#1e3535;
+  --accent-chip-text:#5db4bb;
+  --tag-bg:#282622;
+  --tag-text:#9a9892;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:var(--font-body);font-size:clamp(0.85rem,1.2vw,0.95rem);color:var(--text);background:var(--bg);line-height:1.6;transition:background 0.2s,color 0.2s}
+
+/* ─── PAGE SHELL ────────────────────────────────────────── */
+.page{max-width:1020px;margin:0 auto;padding:clamp(1.5rem,4vw,3rem) clamp(1rem,3vw,2rem)}
+.top-bar{display:flex;justify-content:flex-end;margin-bottom:1.25rem}
+.theme-btn{display:flex;align-items:center;gap:0.4rem;padding:0.45rem 0.85rem;border-radius:var(--r-full);border:1px solid var(--border);background:var(--surface);color:var(--text-muted);font-size:0.78rem;font-family:var(--font-body);cursor:pointer;transition:all 0.18s;letter-spacing:0.01em}
+.theme-btn:hover{color:var(--accent);border-color:var(--accent)}
+.theme-btn svg{flex-shrink:0}
+
+/* ─── HEADER ────────────────────────────────────────────── */
+.header{background:var(--surface);border-radius:var(--r-lg);padding:clamp(1.5rem,3vw,2.25rem) clamp(1.5rem,3vw,2.5rem);margin-bottom:1.25rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap}
+.header-left{flex:1 1 300px}
+.name-line{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.35rem}
+h1{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:700;letter-spacing:-0.025em;color:var(--text);line-height:1.1}
+.title-badge{background:var(--accent);color:#fff;font-size:0.72rem;font-weight:600;padding:0.25rem 0.65rem;border-radius:var(--r-full);letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;align-self:center}
+.tagline{font-size:clamp(0.82rem,1.3vw,0.9rem);color:var(--text-muted);line-height:1.5;max-width:65ch;margin-bottom:1rem}
+.contact-row{display:flex;flex-wrap:wrap;gap:0.4rem 1rem}
+.contact-item{display:flex;align-items:center;gap:0.35rem;font-size:0.8rem;color:var(--text-muted);text-decoration:none;transition:color 0.15s}
+.contact-item:hover{color:var(--accent)}
+.contact-item svg{flex-shrink:0;opacity:0.6}
+.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem;padding-top:0.25rem}
+.cert-chips{display:flex;flex-direction:column;gap:0.35rem;align-items:flex-end}
+.cert-chip{background:var(--accent-chip-bg);color:var(--accent-chip-text);font-size:0.72rem;font-weight:600;padding:0.3rem 0.7rem;border-radius:var(--r-full);white-space:nowrap;border:1px solid transparent}
+
+/* ─── BODY LAYOUT ───────────────────────────────────────── */
+.body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);gap:1.25rem;align-items:start}
+@media(max-width:700px){.body{grid-template-columns:1fr}}
+
+/* ─── CARDS ─────────────────────────────────────────────── */
+.card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm);overflow:hidden}
+.card+.card{margin-top:1.25rem}
+.card-header{padding:0.85rem 1.25rem;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:0.55rem}
+.card-header-dot{width:7px;height:7px;border-radius:var(--r-full);background:var(--accent);flex-shrink:0}
+.card-header h2{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)}
+.card-body{padding:1.1rem 1.25rem}
+
+/* ─── SUMMARY ───────────────────────────────────────────── */
+.summary-text{font-size:0.88rem;color:var(--text-muted);line-height:1.7;max-width:72ch}
+.summary-text strong{color:var(--text);font-weight:600}
+
+/* ─── SKILLS ────────────────────────────────────────────── */
+.skill-group{margin-bottom:1rem}
+.skill-group:last-child{margin-bottom:0}
+.skill-group-label{font-size:0.68rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--accent);margin-bottom:0.45rem}
+.tags{display:flex;flex-wrap:wrap;gap:0.35rem}
+.tag{background:var(--tag-bg);color:var(--tag-text);font-size:0.74rem;padding:0.25rem 0.6rem;border-radius:var(--r-full);line-height:1.3;border:1px solid var(--divider)}
+.tag.accent{background:var(--accent-chip-bg);color:var(--accent-chip-text)}
+
+/* ─── EDUCATION ─────────────────────────────────────────── */
+.edu-item{padding-bottom:0.85rem;margin-bottom:0.85rem;border-bottom:1px solid var(--divider)}
+.edu-item:last-child{padding-bottom:0;margin-bottom:0;border-bottom:none}
+.edu-degree{font-size:0.84rem;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:0.2rem}
+.edu-meta{font-size:0.76rem;color:var(--text-muted);line-height:1.5}
+.edu-gpa{display:inline-block;background:var(--accent-chip-bg);color:var(--accent-chip-text);font-size:0.68rem;font-weight:600;padding:0.15rem 0.5rem;border-radius:var(--r-full);margin-top:0.3rem;font-family:var(--font-mono)}
+
+/* ─── EXPERIENCE ─────────────────────────────────────────── */
+.exp-item{padding-bottom:1.4rem;margin-bottom:1.4rem;border-bottom:1px solid var(--divider);position:relative;padding-left:1.1rem}
+.exp-item:last-child{padding-bottom:0;margin-bottom:0;border-bottom:none}
+.exp-item::before{content:'';position:absolute;left:0;top:0.45rem;width:6px;height:6px;border-radius:var(--r-full);background:var(--accent);flex-shrink:0}
+.exp-item::after{content:'';position:absolute;left:2.5px;top:1.1rem;width:1px;bottom:-1.4rem;background:var(--divider)}
+.exp-item:last-child::after{display:none}
+.exp-top{display:flex;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.2rem;justify-content:space-between}
+.exp-role{font-size:0.9rem;font-weight:700;color:var(--text);line-height:1.3}
+.exp-date{font-size:0.72rem;color:var(--accent);font-family:var(--font-mono);font-weight:500;white-space:nowrap;padding-top:0.1rem}
+.exp-company{font-size:0.78rem;color:var(--text-muted);margin-bottom:0.55rem;font-weight:500}
+.exp-bullets{padding-left:1rem;list-style:none;display:flex;flex-direction:column;gap:0.38rem}
+.exp-bullets li{position:relative;font-size:0.82rem;color:var(--text-muted);line-height:1.6;padding-left:0.1rem}
+.exp-bullets li::before{content:'›';position:absolute;left:-0.8rem;color:var(--accent);font-weight:700}
+.exp-bullets li strong{color:var(--text);font-weight:600}
+
+/* ─── PROJECTS ───────────────────────────────────────────── */
+.proj-grid{display:flex;flex-direction:column;gap:0.9rem}
+.proj-item{background:var(--surface-2);border-radius:var(--r-md);padding:0.9rem 1rem;border:1px solid var(--divider);transition:box-shadow 0.18s}
+.proj-item:hover{box-shadow:var(--shadow-md)}
+.proj-top{display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem}
+.proj-name{font-size:0.84rem;font-weight:700;color:var(--text);line-height:1.3}
+.proj-date{font-size:0.7rem;color:var(--text-faint);font-family:var(--font-mono);white-space:nowrap}
+.proj-stack{display:flex;flex-wrap:wrap;gap:0.3rem;margin-bottom:0.45rem}
+.proj-tag{background:var(--tag-bg);color:var(--text-muted);font-size:0.67rem;padding:0.15rem 0.5rem;border-radius:var(--r-full);font-family:var(--font-mono)}
+.proj-desc{font-size:0.79rem;color:var(--text-muted);line-height:1.6}
+.proj-desc strong{color:var(--text);font-weight:600}
+
+/* ─── CERTS ──────────────────────────────────────────────── */
+.cert-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
+.cert-list li{font-size:0.8rem;color:var(--text-muted);padding-left:1rem;position:relative;line-height:1.5}
+.cert-list li::before{content:'✦';position:absolute;left:0;color:var(--accent);font-size:0.6rem;top:0.3rem}
+.cert-list li strong{color:var(--text);font-weight:600;display:block;font-size:0.82rem}
+
+/* ─── PRINT ──────────────────────────────────────────────── */
+@media print{
+  body{background:#fff;font-size:9pt}
+  .top-bar,.theme-btn{display:none}
+  .page{padding:0.5cm 0.75cm;max-width:100%}
+  .card{box-shadow:none;border:1px solid #e0dedd;break-inside:avoid}
+  .header{box-shadow:none}
+  h1{font-size:20pt}
+  .body{grid-template-columns:minmax(0,1fr) minmax(0,1.9fr)}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <span>Dark mode</span>
+    </button>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="name-line">
+        <h1>Gavin Dias</h1>
+        <span class="title-badge">AI Engineer</span>
+      </div>
+      <p class="tagline">Lead Software Architect &amp; AI Agent Engineer — 7+ years building production-grade intelligent systems, agentic pipelines, and enterprise platforms across insurance, underwriting, and learning &amp; development.</p>
+      <div class="contact-row">
+        <a href="mailto:gavindias7@gmail.com" class="contact-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          gavindias7@gmail.com
+        </a>
+        <span class="contact-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Charlotte, NC
+        </span>
+        <span class="contact-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          248-704-2992
+        </span>
+        <a href="https://www.linkedin.com/in/gavin-dias" target="_blank" rel="noopener" class="contact-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          linkedin.com/in/gavin-dias
+        </a>
+        <a href="https://github.com/gavindias7" target="_blank" rel="noopener" class="contact-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          github.com/gavindias7
+        </a>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="cert-chips">
+        <span class="cert-chip">🏅 Appian Certified Lead Dev — L3</span>
+        <span class="cert-chip">🤖 Advanced GenAI / LLM / Agents</span>
+        <span class="cert-chip">🎓 M.S. Computer Science — WSU</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+
+      <!-- SUMMARY -->
+      <div class="card">
+        <div class="card-header"><span class="card-header-dot"></span><h2>Summary</h2></div>
+        <div class="card-body">
+          <p class="summary-text">
+            AI Engineer and Lead Software Architect with <strong>7+ years</strong> designing and deploying intelligent systems at scale. Deep expertise in <strong>agentic architectures</strong>, multi-agent orchestration, RAG pipelines, and LLM integration — Claude, Gemini, GPT-4o, NVIDIA NIM. Proven ability to lead teams, advise clients on AI strategy, and ship production-grade systems that reduce manual workflows and drive measurable impact.
+          </p>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="card">
+        <div class="card-header"><span class="card-header-dot"></span><h2>Technical Skills</h2></div>
+        <div class="card-body">
+
+          <div class="skill-group">
+            <div class="skill-group-label">AI / GenAI Engineering</div>
+            <div class="tags">
+              <span class="tag accent">Agentic AI Systems</span>
+              <span class="tag accent">Multi-Agent Orchestration</span>
+              <span class="tag accent">RAG Pipelines</span>
+              <span class="tag accent">LLM Integration</span>
+              <span class="tag accent">Tool Use / Function Calling</span>
+              <span class="tag accent">MCP Servers</span>
+              <span class="tag accent">Memory Architectures</span>
+              <span class="tag accent">Prompt Engineering</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Frameworks & Orchestration</div>
+            <div class="tags">
+              <span class="tag">LangChain</span>
+              <span class="tag">LangGraph</span>
+              <span class="tag">LlamaIndex</span>
+              <span class="tag">CrewAI</span>
+              <span class="tag">Smolagents</span>
+              <span class="tag">Microsoft Copilot Studio</span>
+              <span class="tag">Appian AI / IDP</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">LLM Ecosystem</div>
+            <div class="tags">
+              <span class="tag">Claude Sonnet</span>
+              <span class="tag">Gemini API</span>
+              <span class="tag">GPT-4o</span>
+              <span class="tag">NVIDIA NIM API</span>
+              <span class="tag">Kimi K2.5</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Languages</div>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">JavaScript / TypeScript</span>
+              <span class="tag">Java</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Appian SAIL</span>
+              <span class="tag">C#</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Frameworks & Web</div>
+            <div class="tags">
+              <span class="tag">FastAPI</span>
+              <span class="tag">React</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">Django</span>
+              <span class="tag">Angular 2+</span>
+              <span class="tag">Spring Boot</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Databases & Vector Stores</div>
+            <div class="tags">
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">MySQL / MS SQL</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">ChromaDB</span>
+              <span class="tag">Pinecone</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Cloud & Tools</div>
+            <div class="tags">
+              <span class="tag">AWS</span>
+              <span class="tag">GCP / Vertex AI</span>
+              <span class="tag">Docker</span>
+              <span class="tag">GitHub / CI-CD</span>
+              <span class="tag">Pandas / NumPy</span>
+              <span class="tag">JIRA</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- EDUCATION -->
+      <div class="card">
+        <div class="card-header"><span class="card-header-dot"></span><h2>Education</h2></div>
+        <div class="card-body">
+          <div class="edu-item">
+            <div class="edu-degree">M.S. Computer Science</div>
+            <div class="edu-meta">Wayne State University, MI<br>May 2019</div>
+            <span class="edu-gpa">GPA 3.78 / 4.0</span>
+          </div>
+          <div class="edu-item">
+            <div class="edu-degree">B.E. Computer Engineering</div>
+            <div class="edu-meta">University of Mumbai, India<br>May 2017</div>
+            <span class="edu-gpa">🏆 Best Academic Project Award</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERTIFICATIONS -->
+      <div class="card">
+        <div class="card-header"><span class="card-header-dot"></span><h2>Certifications</h2></div>
+        <div class="card-body">
+          <ul class="cert-list">
+            <li>
+              <strong>Advanced Applied GenAI / LLM / Agents</strong>
+              Mar 2024 – Present
+            </li>
+            <li>
+              <strong>Appian Certified Lead Developer (Level 3)</strong>
+              May 2024 – Present
+            </li>
+            <li>
+              <strong>IEEE Member — Creative Executive</strong>
+              College Chapter, 2015–2016
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <!-- EXPERIENCE -->
+      <div class="card">
+        <div class="card-header"><span class="card-header-dot"></span><h2>Work Experience</h2></div>
+        <div class="card-body">
+
+          <div class="exp-item">
+            <div class="exp-top">
+              <div class="exp-role">AI Agent Engineer &nbsp;|&nbsp; Lead Software Architect</div>
+              <span class="exp-date">Jun 2022 – Present</span>
+            </div>
+            <div class="exp-company">Encora Technology Group LLC — Charlotte, NC</div>
+            <ul class="exp-bullets">
+              <li>Architected and shipped a production-ready <strong>L&D AI Agent</strong> (Microsoft Copilot Studio) with 80% agentic workflow coverage, reducing manual learning-operations effort by over 60%.</li>
+              <li>Led <strong>GenAI Document Processing pipeline</strong> using <strong>Claude Sonnet</strong> for insurance claims correspondence analysis and auto-decisioning, cutting analyst review cycles by ~40%.</li>
+              <li>Spearheaded AI-driven automation initiatives integrating LLM orchestration to modernize legacy workflows for a Fortune 500 insurance client.</li>
+              <li>Defined system architecture and data models for multi-integration Appian applications serving thousands of daily users across underwriting, claims, and onboarding.</li>
+              <li>Advised client C-suite on AI adoption strategy, platform selection, and integration roadmaps.</li>
+              <li>Conducted technical interviews, mentored 5+ junior developers, and led Appian training programs accelerating team certification rates.</li>
+            </ul>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-top">
+              <div class="exp-role">Senior Software Developer</div>
+              <span class="exp-date">Feb 2020 – Jun 2022</span>
+            </div>
+            <div class="exp-company">Encora Technology Group LLC — Charlotte, NC</div>
+            <ul class="exp-bullets">
+              <li>Built full-stack Appian applications integrating <strong>4+ REST/SOAP data sources</strong> for a high-volume insurance underwriting platform.</li>
+              <li>Designed dynamic, reusable Appian SAIL UI components, reducing interface build time by ~30% through templated patterns.</li>
+              <li>Architected complex process models supporting end-to-end underwriting workflows with configurable routing logic and real-time data validation.</li>
+            </ul>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-top">
+              <div class="exp-role">Appian Designer</div>
+              <span class="exp-date">Aug 2019 – Feb 2020</span>
+            </div>
+            <div class="exp-company">IPD Solutions (now Encora)</div>
+            <ul class="exp-bullets">
+              <li>Delivered insurance-domain Appian business applications and automated system processes.</li>
+              <li>Built in-house IP tooling and two Appian App Market apps, expanding internal development velocity.</li>
+            </ul>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-top">
+              <div class="exp-role">Full-Stack Developer Intern</div>
+              <span class="exp-date">May 2018 – Aug 2018</span>
+            </div>
+            <div class="exp-company">Sumitomo — Detroit, MI</div>
+            <ul class="exp-bullets">
+              <li>Built a full-stack Project Tracking Web App (Angular 4, PHP, SQL Server) with Active Directory SSO, replacing a manual tracking system for advanced cost and timeline analysis.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="card">
+        <div class="card-header"><span class="card-header-dot"></span><h2>Key Projects</h2></div>
+        <div class="card-body">
+          <div class="proj-grid">
+
+            <div class="proj-item">
+              <div class="proj-top">
+                <div class="proj-name">Claims Intake Portal + GenAI Document Processing</div>
+                <span class="proj-date">May 2024 – Present</span>
+              </div>
+              <div class="proj-stack">
+                <span class="proj-tag">Appian</span>
+                <span class="proj-tag">Appian AI</span>
+                <span class="proj-tag">Claude Sonnet</span>
+                <span class="proj-tag">GenAI</span>
+              </div>
+              <p class="proj-desc">Led the build of an end-to-end insurance claims intake and back-office workflow system. Integrated <strong>Claude Sonnet</strong> for automated correspondence processing and AI-based auto-decisioning, reducing analyst review cycles by ~40%.</p>
+            </div>
+
+            <div class="proj-item">
+              <div class="proj-top">
+                <div class="proj-name">L&D AI Agent</div>
+                <span class="proj-date">May – Jul 2025</span>
+              </div>
+              <div class="proj-stack">
+                <span class="proj-tag">Microsoft Copilot Studio</span>
+                <span class="proj-tag">Multi-Agent</span>
+                <span class="proj-tag">Tool Orchestration</span>
+              </div>
+              <p class="proj-desc">Designed and deployed a production enterprise L&D AI Agent achieving <strong>80% agentic / 20% structured logic</strong> architecture — enabling autonomous task execution, knowledge retrieval, and scalable intelligent support for enterprise learning operations.</p>
+            </div>
+
+            <div class="proj-item">
+              <div class="proj-top">
+                <div class="proj-name">Configurable Workflow System</div>
+                <span class="proj-date">Feb – May 2023</span>
+              </div>
+              <div class="proj-stack">
+                <span class="proj-tag">Appian</span>
+                <span class="proj-tag">Rule Engine</span>
+                <span class="proj-tag">Architecture</span>
+              </div>
+              <p class="proj-desc">Drove key architectural decisions to build a highly configurable, rule-engine-backed workflow system supporting dynamic process routing across business units.</p>
+            </div>
+
+            <div class="proj-item">
+              <div class="proj-top">
+                <div class="proj-name">Insurance Underwriting System</div>
+                <span class="proj-date">Aug 2020 – Nov 2023</span>
+              </div>
+              <div class="proj-stack">
+                <span class="proj-tag">Appian</span>
+                <span class="proj-tag">REST APIs</span>
+                <span class="proj-tag">DocuSign</span>
+                <span class="proj-tag">IDP</span>
+              </div>
+              <p class="proj-desc">Designed a process-backed platform integrating <strong>4+ external data sources</strong> with complex business rules, automated routing, and real-time decisioning — serving a multi-team enterprise underwriting operation.</p>
+            </div>
+
+            <div class="proj-item">
+              <div class="proj-top">
+                <div class="proj-name">ML Sales Prediction — Kaggle Walmart Dataset</div>
+                <span class="proj-date">Mar – May 2019</span>
+              </div>
+              <div class="proj-stack">
+                <span class="proj-tag">Python</span>
+                <span class="proj-tag">Machine Learning</span>
+                <span class="proj-tag">Feature Engineering</span>
+              </div>
+              <p class="proj-desc">Built a predictive ML model using weather signals (snow/rain) to forecast weather-sensitive product sales probabilities, applying ensemble methods and feature engineering.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /right -->
+  </div><!-- /body -->
+</div><!-- /page -->
+
+<script>
+(function(){
+  const btn = document.querySelector('[data-theme-toggle]');
+  const root = document.documentElement;
+  let theme = 'light';
+  root.setAttribute('data-theme', theme);
+
+  function setTheme(t) {
+    theme = t;
+    root.setAttribute('data-theme', t);
+    const isDark = t === 'dark';
+    btn.innerHTML = isDark
+      ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><span>Light mode</span>`
+      : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Dark mode</span>`;
+  }
+
+  btn.addEventListener('click', () => setTheme(theme === 'dark' ? 'light' : 'dark'));
+  setTheme('light');
+})();
+</script>
+</body>
+</html>

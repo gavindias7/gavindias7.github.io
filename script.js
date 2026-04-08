@@ -32,6 +32,7 @@
   });
 
   // ─── NEURAL NETWORK CANVAS ─────────────────────────────────
+  let animPaused = false;
   (function initNeuralCanvas() {
     const canvas = document.getElementById('neural-canvas');
     if (!canvas) return;
@@ -139,10 +140,10 @@
         }
       }
 
-      requestAnimationFrame(draw);
+      if (!animPaused) requestAnimationFrame(draw);
     }
 
-    window._neuralCanvas = { updateTheme: () => {} }; // stub
+    window._neuralCanvas = { updateTheme: () => {}, resumeDraw: () => { if (!animPaused) draw(); } };
 
     resize();
     createNodes();
@@ -445,16 +446,13 @@
       }
     });
 
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-      card.style.boxShadow = '';
-    });
-
     card.addEventListener('mouseenter', () => {
       card.style.transition = 'box-shadow 0.1s, border-color 0.3s';
     });
 
     card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.boxShadow = '';
       card.style.transition = 'all 0.4s cubic-bezier(0.4,0,0.2,1)';
     });
   });
@@ -476,9 +474,17 @@
       const factor = (i + 1) * 0.5;
       glow.style.transform = `translate(${glowX * factor}px, ${glowY * factor}px)`;
     });
-    requestAnimationFrame(updateGlows);
+    if (!animPaused) requestAnimationFrame(updateGlows);
   }
   updateGlows();
+
+  document.addEventListener('visibilitychange', () => {
+    animPaused = document.hidden;
+    if (!animPaused) {
+      window._neuralCanvas.resumeDraw();
+      updateGlows();
+    }
+  });
 
   // ─── MAGNETIC BUTTON EFFECT ────────────────────────────────
   document.querySelectorAll('.btn-primary, .contact-cta-btn').forEach(btn => {

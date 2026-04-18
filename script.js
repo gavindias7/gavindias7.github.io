@@ -502,8 +502,20 @@
 
   // ─── NAV LOGO DATA ATTR (for glitch CSS) ──────────────────
   const navLogo = document.getElementById('nav-logo');
-  if (navLogo) {
-    navLogo.setAttribute('data-text', navLogo.textContent);
+  const logoText = navLogo && navLogo.querySelector('.logo-text');
+  if (logoText) {
+    logoText.setAttribute('data-text', logoText.textContent);
+  }
+
+  // ─── NAV AVATAR SWAP ───────────────────────────────────────
+  // When the hero profile photo scrolls behind the nav, swap GD → avatar
+  const heroProfileImg = document.querySelector('.hero-profile-img');
+  if (heroProfileImg && navLogo) {
+    const avatarObserver = new IntersectionObserver(
+      ([entry]) => navLogo.classList.toggle('has-avatar', !entry.isIntersecting),
+      { threshold: 0, rootMargin: '-64px 0px 0px 0px' }
+    );
+    avatarObserver.observe(heroProfileImg);
   }
 
 })();
